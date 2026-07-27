@@ -1,0 +1,47 @@
+What is React?
+===============
+    -React is an open-source javascript library, which is used 
+     to build user interfaces.
+    -React is Developed and maintained by Meta(Facebook).
+
+-In 2012 so many around the globe uses Facebook. To make it better experience, they 
+build their own library react and 2014 they open sourced it.
+
+is React.js and React Native are same?
+======================================
+    -React.js is used for web application/website.
+    -React Native is used for mobile application.
+
+What are the major uses of React?
+=================================
+    -React is mainly used to build UI of SPA and Progressive Web Apps(PWA).
+
+SPA:- Single page application is nothing but an application that loads a specific
+      part of UI instead of whole app.
+PWA:- An application that feels like native app is known as PWA.
+
+What are Compititors and react advantages over them?
+====================================================
+    -React can be replaced with angular, vue.
+    -Angular is a framework of JS and Vue is also a library of JS.
+    -React is more simpler, easy and it supports Virtual DOM for quickness.
+
+Procedure to Build first React app
+===================================
+    -Install Vs Code editor
+    -install NPM
+    -We need a bundler to get react tamplate bundle. Using this, we don't need to create every
+     Single file, we will get basic boilerplate code.
+    
+    To Create react app use these following commands:
+        >npm create vite@latest
+    To run application run this command:
+        >npm run dev
+
+
+
+
+
+
+
+
