@@ -1,8 +1,14 @@
+import './App.css'
+import MovieLine from './components/MovieLine';
 function App(){
   return (
-    <div>
-      <h1>Hello coder</h1>
-    </div>
-  );
+    <section className="myDiv">
+      <MovieLine/>
+      <MovieLine/>
+      <MovieLine/>
+      <MovieLine/>
+      <MovieLine/>
+    </section>
+  )
 }
 export default App;

@@ -29,14 +29,63 @@ What are Compititors and react advantages over them?
 Procedure to Build first React app
 ===================================
     -Install Vs Code editor
-    -install NPM
+    -install NPM [Node Package Manager]
     -We need a bundler to get react tamplate bundle. Using this, we don't need to create every
      Single file, we will get basic boilerplate code.
     
+NPM:
+==== 
+    -it is a software used by developers to download, install, unpdate, delete any framework or 
+     library from the project.
+
     To Create react app use these following commands:
         >npm create vite@latest
     To run application run this command:
         >npm run dev
+
+React Files
+============
+    -React code contains  files called jsx [javascript extensible] using jsx we 
+     can write HTML inside javascript.
+    -Every jsx file should return one HTML element.
+    -Always name of file and component/function name should be same.
+     [better Start function name with uppercase].
+    -in jsx class proporty should written as className, because class is a keyword in js.
+    -in jsx, it is mandatory to close all tags including self closing tags.
+
+    For production use: >npm run build
+
+Files & Folders
+===============
+    package.json-       it contains meta data about our application.
+    package-lock.json-  it contains meta data of package.json.
+    vite.config.js-     contains setting of Vite.
+    .gitignore-         contains files that are ignored by git.
+    eslint-             notifies and observer error in code.
+    node_modules-       it containes actual code of all package.
+    public-             for static resources.
+    src-                for dynamic resources.
+    index.html-         main and entry point of our application. it contains
+                        head and body.
+    main.jsx-           it loads app.jsx into div with id "root". in react we call
+                        loading as rendering.
+    App.jsx-            contains actual body code in jsx format.
+
+
+React basically deals with 4 topics:
+    i.components
+    ii.Props
+    iii.State and Virtual DOM
+    iv.API's
+
+components:
+===========
+    -React divides the whole UI of a website into a reusable logical parts
+     called component.
+
+
+
+
 
 
 
