@@ -1,10 +1,12 @@
-import './Movie.css';
-function Movie(){
-    return (
-        <div className="movie">
-            <img src="https://wallpaperaccess.com/full/6227674.png" alt="Vincenzo" />
-            <h2>Vincenzo</h2>
-        </div>
-    )
+import "./Movie.css";
+function Movie(props) {
+  return (
+    <div className="movie">
+      <img src={props.imgLink}
+      alt={props.title} />
+      <h2>{props.title}</h2>
+      <p>Released Year: {props.year}</p>
+    </div>
+  );
 }
 export default Movie;

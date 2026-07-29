@@ -81,7 +81,26 @@ React basically deals with 4 topics:
 components:
 ===========
     -React divides the whole UI of a website into a reusable logical parts
-     called component.
+     called component, using which we can build application.
+        -reusable
+        -simple
+        -can be functional or class
+        -return jsx but all jsx files/function must return one element only.
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
