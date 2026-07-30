@@ -1,0 +1,67 @@
+Level 1: Basic Understanding
+=============================
+What is React? Why is it called a JavaScript library?
+    Ans:React is an open-source javascript library to build interactive SPA and PWA. it is called javascript library beacuse it is built using javascript.
+
+Who developed React, and when was it open-sourced?
+    Ans:React was developed by Facebook and maintained by Meta. in 2013 it is open sourced.
+
+What is the difference between React.js and React Native?
+    Ans:Both react and react native are built using javascript but react.js is sed to build web application where as react native is used for mobile application.
+
+What is an SPA? Give one real-world example.
+    Ans:SPA stands for single page application means instead of loading whole website it will load only specific part of website where changes needed.
+    Ex: nextflix, chatgpt, amazon, Facebook etc....
+
+What is a PWA?
+    Ans:PWA stands for Progressive web application, react is used to build this kind of application which gives feels like native app while it is a website.
+
+Name two alternatives/competitors of React.
+    Ans: Angular and Vue are the Compititors of react.
+
+Write any four advantages of React.
+    Ans:    i.it is simple and easy to learn compare to other library/framework.
+            ii.it uses reusable component which makes website cleaner and easy to maintain.
+            iii.it supports Virtual DOM and modify only the specific oart where changes needed.
+            iv.
+
+What is NPM? Why is it required in a React project?
+    Ans:NPM stands for node package manager, is a software used by developers for download, install, update, delete any library/framework from the project.
+
+What is Vite? Why do we use it?
+    Ans:Vite is a bundler, instead of creating every single file for react application we can use vite bundler to automate this task. vite will create and download every file and library that are required for react application.
+
+What is JSX? Why is JSX useful in React?
+    Ans:jsx stands for javascript XML, it is a extenson if react file. in this file we can write html element inside javascript, and every jsx file must export component.
+
+Level 2: React Commands
+=======================
+Write the command to create a React application using Vite.
+    Ans: npm create vite@latest
+
+Write the command to install all project dependencies.
+    Ans: npm install
+
+Write the command to start the React development server.
+    Ans: npm run dev
+
+Write the command to create a production build.
+    Ans: npm run build
+
+Write the command to install a package named axios.
+    Ans: npm install axios --save
+
+Write the command to uninstall a package named axios.
+    Ans: npm uninstall axios 
+
+What is the purpose of package.json?
+    Ans: package.json file containes meta data about our application i.e. author name, batch command, dependencies, versions etc...
+
+What is the purpose of package-lock.json?
+    Ans: package-lock.json file containes meta data about package.json file.
+
+What is the purpose of node_modules?
+    Ans: node_modules Folders containes all downloaded library for react application.
+
+What is the purpose of .gitignore?
+    Ans:  .gitignore file is used to ignored/skip uploading specific file or folder into github.

@@ -2,7 +2,6 @@ import Movie from "./Movie";
 import "./MovieLine.css";
 
 function MovieLine() {
-  // 1️⃣ Define an array of movie objects
   const movies = [
     {
       title: "KGF",
