@@ -1,20 +1,32 @@
-import './Header.css';
+import "./Header.css";
 
-function Header() {
+function Header({ cartCount }) {
+  // destructure cartCount
   return (
     <header className="header">
       <div className="nav-logo">
-        <img 
-          src="https://imgs.search.brave.com/7W7_6SSS8Wxt-pGIk69VLhSrexcvYZF2Svg03aoYUFs/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly93d3cu/ZnJlZXBuZ2xvZ29z/LmNvbS91cGxvYWRz/L25ldGZsaXgtbG9n/by1wbmctZW1ibGVt/LTE1LnBuZw" 
-          alt="Logo" 
-        />
+        <a href="#">
+          <h3>Lumina-Shop</h3>
+        </a>
       </div>
       <nav>
         <ul className="nav-links">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#">About</a>
+          </li>
+          <li>
+            <a href="#">Contact</a>
+          </li>
         </ul>
+      </nav>
+      <nav className="fs-5">
+        <span className="bi bi-person m-1 p-2 "></span>
+        <span className="bi bi-cart-fill m-1 p-2 ">
+          <sup>{cartCount}</sup>
+        </span>
       </nav>
     </header>
   );

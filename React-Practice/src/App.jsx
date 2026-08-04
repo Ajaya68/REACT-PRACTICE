@@ -1,13 +1,22 @@
-import "./App.css";
-import Counter from "./components/Counter";
-// import Header from "./components/Header";
-// import MainBody from "./components/MainBody";
-// import Footer from "./components/Footer";
+import { useState } from "react";
+import Header from "./components/Header";
+import Products from "./components/Products";
+import Footer from "./components/Footer";
+
 function App() {
+  const [cartCount, setCartCount] = useState(0);
+
+  const addToCart = () => {
+    setCartCount((prev) => prev + 1);
+  };
+
   return (
     <section className="myDiv">
-      <Counter />
+      <Header cartCount={cartCount} />
+      <Products onAddToCart={addToCart} />
+      <Footer />
     </section>
   );
 }
+
 export default App;

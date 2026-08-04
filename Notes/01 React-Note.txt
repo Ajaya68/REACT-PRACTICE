@@ -30,13 +30,13 @@ Procedure to Build first React app
 ===================================
     -Install Vs Code editor
     -install NPM [Node Package Manager]
-    -We need a bundler to get react tamplate bundle. Using this, we don't need to create 
-     every Single file, we will get basic boilerplate code.
+    -We need a bundler to get react tamplate bundle. Using this, we don't need to 
+     create every Single file, we will get basic boilerplate code.
     
 NPM:
 ==== 
-    -it is a software used by developers to download, install, unpdate, delete any framework or 
-     library from the project.
+    -it is a software used by developers to download, install, unpdate, delete any  
+     framework or library from the project.
 
     To Create react app use these following commands:
         >npm create vite@latest
@@ -50,7 +50,8 @@ React Files
     -Every jsx file should return one HTML element.
     -Always name of file and component/function name should be same.
      [better Start function name with uppercase].
-    -in jsx class proporty should written as className, because class is a keyword in js.
+    -in jsx class proporty should written as className, because class is a 
+     keyword in js.
     -in jsx, it is mandatory to close all tags including self closing tags.
 
     For production use: >npm run build
@@ -239,6 +240,61 @@ This helps React update the UI efficiently.
 
 
 
+API's
+=======
+    -API is the bridge between client and server of the application.
+    -in client server model,client request the server and server responds to the
+     client using API's.
+    -The most used API's in web development are REST API's. They send and receive 
+     the data in JSON format.
+     Ex:
+        [
+            {
+                "key":value;
+            }
+        ]
+
+    -To call or get data from API, we can use
+        fatch: fetch is the default method provided by browser to request the data from server.
+            Syntax: fetch(url/endpoint,option)
+        Axios:  Axios is the 3rd party library which can be used instead of fatch.
+            Syntax: 
+                    npm install axios
+                    import axios from 'axios'
+                    axios.method(url,options)
+    
+    -The fetch or axios are asynchronous function so that they return promises.
+    -These promises can be resolved by using then-catch or async/await.
+        Syntax: fetch(url,option)
+                .then((res)=>res.json())
+                .then((data)=>console.log(data))
+                .catch((err)=>console.log(err))
+
+        Syntax: async function functionName(){
+            const res =await fetch(url,option)
+            const data = await res.json()
+            console.log(data)
+        }
+
+How to Handle API in React?
+============================
+    -To Handle API or the side of Effects, we use a hook called "useEffect".
+    -useEffect is used whenever the dynamic data is fetching from server or any 
+     asynchronous function need to be Handled.
+     useEffect(()=>{
+        //Code
+     },[dependency array])
+    
+    -useEffect works in all stages of component lifecycle(mounting + updating + unmounting).
+
+Different cases of dependency array:
+====================================
+    -if there is no dependency array, then useEffect willwork at mounting
+     stage and updateing of any state.
+    -if the dependency array is empty, then useEffect will work only at mounting stage.
+    -if the dependency array s=contains some values, the useEffect will work at
+     mounting and updating the stage of only those value.
+    -Major use cases are: fatching the data, timers(setTimeout/setInterval), updating the DOM.
 
 
 
