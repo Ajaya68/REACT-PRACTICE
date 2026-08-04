@@ -1,0 +1,26 @@
+body{
+    border: 1px solid black;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aquamarine;
+}
+div{
+    font-size: 50px;
+    box-shadow: 2px 3px 5px gray;
+    text-align: center;
+}
+button{
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+button:hover{
+    background-color: aliceblue;
+    transform: scale(1.2);
+    transition: all ease-in-out 7ms;
+}

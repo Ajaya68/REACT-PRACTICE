@@ -140,7 +140,8 @@ Important Points about Props
 State:
 ======
     -State is data that belongs to a component and can change over time.
-    -When state changes, React can re-render the component so that the UI displays the updated data.
+    -When state changes, React can re-render the component so that the UI 
+     displays the updated data.
 
 Example:
 A counter can have:
@@ -192,7 +193,14 @@ count     → current state value
 setCount  → function used to update the state
 0         → initial value
 
+--> In react state is asynchronous (it takes some time to run). so below statement 
+    will be executed first.
+    let x =0
+    setX(x+1) // it takes some to set x=1
+    console.log(x)  //x=0
+
 Complete Example:
+==================
 import { useState } from "react";
 
 function Counter() {
