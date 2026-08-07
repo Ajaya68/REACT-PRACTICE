@@ -194,7 +194,7 @@ count     → current state value
 setCount  → function used to update the state
 0         → initial value
 
---> In react state is asynchronous (it takes some time to run). so below statement 
+--> In react state is asynchronous (Which takes some time to run). so below statement 
     will be executed first.
     let x =0
     setX(x+1) // it takes some to set x=1
@@ -236,73 +236,228 @@ When state or props change:
 -React compares it with the previous representation.
 -React determines what actually needs to change.
 -React updates the required parts of the actual DOM.
-This helps React update the UI efficiently.
+-This helps React update the UI efficiently.
 
+APIs
+======
+What is an API?
+=================
+    -API stands for Application Programming Interface.
+    -An API acts as a bridge between the client and the server.
+    -It allows the client to send requests to the server and receive responses.
 
+### How does an API work?
+==========================
+1. The **client** (browser or React application) sends a request.
+2. The **server** processes the request.
+3. The **server** sends the response back through the API.
+4. The client displays the received data.
 
-API's
+## REST API
+============
+* The most commonly used APIs in web development are **REST APIs**.
+* REST APIs usually send and receive data in **JSON (JavaScript Object Notation)** format.
+
+Example of JSON:
+[
+    {
+        "id": 1,
+        "name": "Ajaya",
+        "course": "MCA"
+    }
+]
+
+## How to Call an API?
+=======================
+There are two common ways to request data from an API:
+
+### 1. Fetch API
+=================
+* **Fetch** is the built-in browser method used to make HTTP requests.
+* It does not require any installation.
+
+Syntax:
 =======
-    -API is the bridge between client and server of the application.
-    -in client server model,client request the server and server responds to the
-     client using API's.
-    -The most used API's in web development are REST API's. They send and receive 
-     the data in JSON format.
-     Ex:
-        [
-            {
-                "key":value;
-            }
-        ]
+fetch(url, options)
 
-    -To call or get data from API, we can use
-        fatch: fetch is the default method provided by browser to request the data from server.
-            Syntax: fetch(url/endpoint,option)
-        Axios:  Axios is the 3rd party library which can be used instead of fatch.
-            Syntax: 
-                    npm install axios
-                    import axios from 'axios'
-                    axios.method(url,options)
-    
-    -The fetch or axios are asynchronous function so that they return promises.
-    -These promises can be resolved by using then-catch or async/await.
-        Syntax: fetch(url,option)
-                .then((res)=>res.json())
-                .then((data)=>console.log(data))
-                .catch((err)=>console.log(err))
+Example:
+=========
+fetch("https://api.example.com/users");
 
-        Syntax: async function functionName(){
-            const res =await fetch(url,option)
-            const data = await res.json()
-            console.log(data)
-        }
+### 2. Axios
+============
+* **Axios** is a third-party JavaScript library used to make HTTP requests.
+* It provides additional features compared to Fetch.
+* Axios must be installed before using it.
 
-How to Handle API in React?
-============================
-    -To Handle API or the side of Effects, we use a hook called "useEffect".
-    -useEffect is used whenever the dynamic data is fetching from server or any 
-     asynchronous function need to be Handled.
-     useEffect(()=>{
-        //Code
-     },[dependency array])
-    
-    -useEffect works in all stages of component lifecycle(mounting + updating + unmounting).
+Install Axios:
+    npm install axios
 
-Different cases of dependency array:
-====================================
-    -if there is no dependency array, then useEffect willwork at mounting
-     stage and updateing of any state.
-    -if the dependency array is empty, then useEffect will work only at mounting stage.
-    -if the dependency array s=contains some values, the useEffect will work at
-     mounting and updating the stage of only those value.
-    -Major use cases are: fatching the data, timers(setTimeout/setInterval), updating the DOM.
+Import Axios:
+    import axios from "axios";
+
+Syntax:
+    axios.get(url);
+    or
+    axios.post(url, data);
+
+## Fetch vs Axios
+====================
+| Fetch                     | Axios                                 |
+| ------------------------- | ------------------------------------- |
+| Built into the browser    | Third-party library                   |
+| No installation required  | Requires installation                 |
+| Returns a Response object | Returns data directly in the response |
+| Slightly more code        | Cleaner and simpler syntax            |
 
 
+## Fetch and Axios are Asynchronous
+===================================
+* Both **Fetch** and **Axios** are asynchronous.
+* They return a **Promise**.
+* A Promise can be handled using:
+
+  * `.then()` and `.catch()`
+  * `async` and `await`
+
+## Using Fetch with `.then()` and `.catch()`
+=========================================
+fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+
+### Explanation
+================
+* `fetch()` sends the request.
+* `response.json()` converts the response into JavaScript objects.
+* `.then()` receives the data.
+* `.catch()` handles errors.
+
+## Using Fetch with Async/Await
+===============================
+async function getData() {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+}
+
+### Explanation
+==================
+* `async` allows us to use `await`.
+* `await` waits until the Promise is completed.
+* The response is converted into JSON.
+* Finally, the data is displayed.
+
+# Handling APIs in React
+========================
+## What is useEffect?
+=====================
+* **useEffect** is a React Hook.
+* It is used to perform **side effects** in a React component.
+* Side effects include:
+
+  * Fetching data from an API
+  * Using `setTimeout()`
+  * Using `setInterval()`
+  * Updating the document title
+  * Working with browser events
+
+Syntax:
+useEffect(() => {
+
+    // Code
+
+}, [dependencyArray]);
+
+## Why do we use useEffect for API calls?
+========================================
+* API requests are asynchronous.
+* We usually want to fetch data **after the component is rendered**.
+* `useEffect()` is the recommended place to perform API calls in React.
+
+Example:
+useEffect(() => {
+
+    fetchData();
+
+}, []);
+
+Here, `fetchData()` will be called when the component is loaded.
+
+# Dependency Array in useEffect
+===============================
+The behavior of `useEffect()` depends on the dependency array.
+
+## Case 1: No Dependency Array
+=============================
+useEffect(() => {
+
+    console.log("Running");
+
+});
+
+Behavior:
+
+* Runs after **every render**.
+* Runs on the initial render.
+* Runs again whenever the component re-renders.
 
 
+## Case 2: Empty Dependency Array
+==================================
+useEffect(() => {
 
+    console.log("Running Once");
 
+}, []);
 
+Behavior:
 
+* Runs only once after the component is mounted.
+* This is commonly used for API calls.
+
+## Case 3: Dependency Array with Values
+=======================================
+useEffect(() => {
+
+    console.log("Count Changed");
+
+}, [count]);
+
+Behavior:
+
+* Runs after the first render.
+* Runs again only when `count` changes.
+
+If `count` does not change, the effect will not run again.
+
+# Common Uses of useEffect
+==========================
+`useEffect()` is commonly used for:
+
+* Fetching data from APIs
+* Calling asynchronous functions
+* Using `setTimeout()`
+* Using `setInterval()`
+* Updating the document title
+* Adding and removing event listeners
+* Working with browser storage (Local Storage)
+
+# Component Lifecycle and useEffect
+===================================
+A React component goes through three main stages:
+1. **Mounting**
+   * The component is created and added to the screen.
+2. **Updating**
+   * The component re-renders when state or props change.
+3. **Unmounting**
+   * The component is removed from the screen.
+`useEffect()` can be used during all these stages depending on how it is written.
 
 
 
