@@ -1,468 +1,55 @@
-What is React?
-===============
-    -React is an open-source javascript library, which is used 
-     to build user interfaces.
-    -React is Developed and maintained by Meta(Facebook).
-
--In 2012 so many around the globe uses Facebook. To make it better experience, they 
-build their own library react and 2014 they open sourced it.
-
-is React.js and React Native are same?
-======================================
-    -React.js is used for web application/website.
-    -React Native is used for mobile application.
-
-What are the major uses of React?
-=================================
-    -React is mainly used to build UI of SPA and Progressive Web Apps(PWA).
-
-SPA:- Single page application is nothing but an application that loads a specific
-      part of UI instead of whole app.
-PWA:- An application that feels like native app is known as PWA.
-
-What are Compititors and react advantages over them?
-====================================================
-    -React can be replaced with angular, vue.
-    -Angular is a framework of JS and Vue is also a library of JS.
-    -React is more simpler, easy and it supports Virtual DOM for quickness.
-
-Procedure to Build first React app
-===================================
-    -Install Vs Code editor
-    -install NPM [Node Package Manager]
-    -We need a bundler to get react tamplate bundle. Using this, we don't need to 
-     create every Single file, we will get basic boilerplate code.
-    
-NPM:
-==== 
-    -it is a software used by developers to download, install, unpdate, delete any  
-     framework or library from the project.
-
-    To Create react app use these following commands:
-        >npm create vite@latest
-    To run application run this command:
-        >npm run dev
-
-React Files
-============
-    -React code contains  files called jsx [javascript extensible] using jsx we 
-     can write HTML inside javascript.
-    -Every jsx file should return one HTML element.
-    -Always name of file and component/function name should be same.
-     [better Start function name with uppercase].
-    -in jsx class proporty should written as className, because class is a 
-     keyword in js.
-    -in jsx, it is mandatory to close all tags including self closing tags.
-
-    For production use: >npm run build
-
-Files & Folders
-===============
-    package.json-       it contains meta data about our application.
-    package-lock.json-  it contains meta data of package.json.
-    vite.config.js-     contains setting of Vite.
-    .gitignore-         contains files that are ignored by git.
-    eslint-             notifies and observer error in code.
-    node_modules-       it containes actual code of all package.
-    public-             for static resources.
-    src-                for dynamic resources.
-    index.html-         main and entry point of our application. it contains
-                        head and body.
-    main.jsx-           it loads app.jsx into div with id "root". in react we call
-                        loading as rendering.
-    App.jsx-            contains actual body code in jsx format.
-
-
-React basically deals with 4 topics:
-    i.components
-    ii.Props
-    iii.State and Virtual DOM
-    iv.API's
-
-components:
-===========
-    -A component is a reusable and independent part of the user interface.
-    -React divides a large UI into smaller logical and reusable parts called components.
-        Example:
-            A shopping website can have:
-                -Navbar
-                -ProductCard
-                -ProductList
-                -Cart
-                -Footer
-    -Each part can be created as a separate component.
-
-Advantages of Components
-========================
--Reusable
--Easy to maintain
--Easy to understand
--Organized
--Can be composed together to create a complete application
-
-Types of Components
-===================
-    -React components can mainly be written as:
-
-        -Function Components
-        -Class Components
-
-    -Modern React development mainly uses function components.
-    Example:
-        function Student() {
-            return <h1>Student Component</h1>;
-        }
-
-Props:
-======
-    -Props is short for Properties.
-    -Props are used to pass data from a parent component to a child component.
-    -Props are received by a component as an object containing key-value pairs.
-Example:
-function Student(props) {
-    return <h1>{props.name}</h1>;
-}
-
-function App() {
-    return <Student name="Ajaya" />;
-}
-
-Here:
-name = "Ajaya"
--is passed from the App component to the Student component.
-
-Important Points about Props
-=============================
--Props are used to pass data between components.
--Props are generally passed from parent to child.
--Props are read-only inside the receiving component.
--Props help make components reusable.
-
-State:
-======
-    -State is data that belongs to a component and can change over time.
-    -When state changes, React can re-render the component so that the UI 
-     displays the updated data.
-
-Example:
-A counter can have:
-    count = 0
-After clicking a button:
-    count = 1
-The UI updates according to the new state.
-
-Important Characteristics of State
-==================================
-    -State can change over time.
-    -State is generally local to the component that owns it.
-    -Changing state can cause the component to re-render.
-    -State is used for dynamic and interactive UI.
-
-How to Manage State Using useState
-==================================
-    -React provides a Hook called useState for managing state in function components.
-
-What is a Hook?
-===============
-    -A Hook is a special React function that allows function components to use React features such as:
-        -State
-        -Effects
-        -Context
-        -References
-
-Examples:
-        useState()
-        useEffect()
-        useContext()
-        useRef()
-
-useState():
-===========
-    -The useState Hook gives us:
-        -The current state value
-        -A function used to update that state
-    -It returns these values in the form of an array.
-
-Syntax:
-const [value, setValue] = useState(initialValue);
-
-Example:
-const [count, setCount] = useState(0);
-
-Here:
-count     → current state value
-setCount  → function used to update the state
-0         → initial value
-
---> In react state is asynchronous (Which takes some time to run). so below statement 
-    will be executed first.
-    let x =0
-    setX(x+1) // it takes some to set x=1
-    console.log(x)  //x=0
-
-Complete Example:
-==================
-import { useState } from "react";
-
-function Counter() {
-
-    const [count, setCount] = useState(0);
-
-    return (
-        <div>
-            <h1>{count}</h1>
-
-            <button onClick={() => setCount(count + 1)}>
-                Increase
-            </button>
-        </div>
-    );
-}
-
-export default Counter;
-
-When the button is clicked:
-0 → 1 → 2 → 3 → 4 ...
-The state changes and React updates the UI.
-
-VIRTUAL DOM
-=============
--The Virtual DOM is a lightweight representation of the UI that React uses to help 
- determine what needs to change.
-
-When state or props change:
-
--React creates an updated representation of the UI.
--React compares it with the previous representation.
--React determines what actually needs to change.
--React updates the required parts of the actual DOM.
--This helps React update the UI efficiently.
-
-APIs
-======
-What is an API?
-=================
-    -API stands for Application Programming Interface.
-    -An API acts as a bridge between the client and the server.
-    -It allows the client to send requests to the server and receive responses.
-
-### How does an API work?
-==========================
-1. The **client** (browser or React application) sends a request.
-2. The **server** processes the request.
-3. The **server** sends the response back through the API.
-4. The client displays the received data.
-
-## REST API
-============
-* The most commonly used APIs in web development are **REST APIs**.
-* REST APIs usually send and receive data in **JSON (JavaScript Object Notation)** format.
-
-Example of JSON:
-[
-    {
-        "id": 1,
-        "name": "Ajaya",
-        "course": "MCA"
-    }
-]
-
-## How to Call an API?
-=======================
-There are two common ways to request data from an API:
-
-### 1. Fetch API
-=================
-* **Fetch** is the built-in browser method used to make HTTP requests.
-* It does not require any installation.
-
-Syntax:
-=======
-fetch(url, options)
-
-Example:
-=========
-fetch("https://api.example.com/users");
-
-### 2. Axios
-============
-* **Axios** is a third-party JavaScript library used to make HTTP requests.
-* It provides additional features compared to Fetch.
-* Axios must be installed before using it.
-
-Install Axios:
-    npm install axios
-
-Import Axios:
-    import axios from "axios";
-
-Syntax:
-    axios.get(url);
-    or
-    axios.post(url, data);
-
-## Fetch vs Axios
-====================
-| Fetch                     | Axios                                 |
-| ------------------------- | ------------------------------------- |
-| Built into the browser    | Third-party library                   |
-| No installation required  | Requires installation                 |
-| Returns a Response object | Returns data directly in the response |
-| Slightly more code        | Cleaner and simpler syntax            |
-
-
-## Fetch and Axios are Asynchronous
-===================================
-* Both **Fetch** and **Axios** are asynchronous.
-* They return a **Promise**.
-* A Promise can be handled using:
-
-  * `.then()` and `.catch()`
-  * `async` and `await`
-
-## Using Fetch with `.then()` and `.catch()`
-=========================================
-fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-        console.log(data);
-    })
-    .catch((error) => {
-        console.log(error);
-    });
-
-### Explanation
-================
-* `fetch()` sends the request.
-* `response.json()` converts the response into JavaScript objects.
-* `.then()` receives the data.
-* `.catch()` handles errors.
-
-## Using Fetch with Async/Await
-===============================
-async function getData() {
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-}
-
-### Explanation
-==================
-* `async` allows us to use `await`.
-* `await` waits until the Promise is completed.
-* The response is converted into JSON.
-* Finally, the data is displayed.
-
-# Handling APIs in React
-========================
-## What is useEffect?
-=====================
-* **useEffect** is a React Hook.
-* It is used to perform **side effects** in a React component.
-* Side effects include:
-
-  * Fetching data from an API
-  * Using `setTimeout()`
-  * Using `setInterval()`
-  * Updating the document title
-  * Working with browser events
-
-Syntax:
-useEffect(() => {
-
-    // Code
-
-}, [dependencyArray]);
-
-## Why do we use useEffect for API calls?
-========================================
-* API requests are asynchronous.
-* We usually want to fetch data **after the component is rendered**.
-* `useEffect()` is the recommended place to perform API calls in React.
-
-Example:
-useEffect(() => {
-
-    fetchData();
-
-}, []);
-
-Here, `fetchData()` will be called when the component is loaded.
-
-# Dependency Array in useEffect
-===============================
-The behavior of `useEffect()` depends on the dependency array.
-
-## Case 1: No Dependency Array
-=============================
-useEffect(() => {
-
-    console.log("Running");
-
-});
-
-Behavior:
-
-* Runs after **every render**.
-* Runs on the initial render.
-* Runs again whenever the component re-renders.
-
-
-## Case 2: Empty Dependency Array
-==================================
-useEffect(() => {
-
-    console.log("Running Once");
-
-}, []);
-
-Behavior:
-
-* Runs only once after the component is mounted.
-* This is commonly used for API calls.
-
-## Case 3: Dependency Array with Values
-=======================================
-useEffect(() => {
-
-    console.log("Count Changed");
-
-}, [count]);
-
-Behavior:
-
-* Runs after the first render.
-* Runs again only when `count` changes.
-
-If `count` does not change, the effect will not run again.
-
-# Common Uses of useEffect
-==========================
-`useEffect()` is commonly used for:
-
-* Fetching data from APIs
-* Calling asynchronous functions
-* Using `setTimeout()`
-* Using `setInterval()`
-* Updating the document title
-* Adding and removing event listeners
-* Working with browser storage (Local Storage)
-
-# Component Lifecycle and useEffect
-===================================
-A React component goes through three main stages:
-1. **Mounting**
-   * The component is created and added to the screen.
-2. **Updating**
-   * The component re-renders when state or props change.
-3. **Unmounting**
-   * The component is removed from the screen.
-`useEffect()` can be used during all these stages depending on how it is written.
-
-
-
-
-
+Hook:
+=====
+    -Hooks are pre defined functions in react from version 16.
+    -These hooks 
+        -holds the state(useState)
+        -run side effect(useEffect)
+        -access life cycle behavior
+        -integrate with cuncurrent rendering
+    -hooks must be present in top level because react them by call order.
+    -Main or popular hooks we use :
+        
+        i.useState  
+        ===========
+        -its purpose is to make state of a value and maintains it.
+
+        State is Mutable
+        =================
+        const[value,setValue]=useState(initialValue)
+        -value containes initially initialValue and setValue is a function
+         that is used to change/replace the value.
+        -state is asynchronous so the next synchronous lines will run first
+         Ex: setValue(5)
+
+        ii.useEffect
+        ============
+        -it is used to run side effect/async function such as API
+         calls, timer or cleanup logic.
+         useEffect(callbackFunction, dependencyArray)
+        -Empty dependence array - run once
+        -dependencyArray with value - run at starting and everytime the state of
+         those values changes.
+        -no dependencyArray - run at starting and everytime, any value state changes.
+
+        iii.useMemo:
+        ============
+        -it is used for memorize or cache expensive calculations
+        useMemo(callbackFunction, dependencyArray)
+        -This should be used for strict calculations
+
+        iv.useCallback:
+        ===============
+        -it is used to cache function.
+        -it maintain the stable identity of function.
+        -it is useful when passing callbacks to memorized children
+        -it is also useful to safeguard from re-render for children dependencies.
+        useCallback(callbackFunction, dependencyArray)
+
+        v.useRef:
+        =========
+        -it is used to do DOM manipulation.
+        -it assumes Reference for every element of DOM.
+        -Mainly used to store values, counters, flag, trimers etc...
 
 
 
