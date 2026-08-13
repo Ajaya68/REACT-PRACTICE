@@ -48,52 +48,101 @@
 // }
 // export default App;
 
-import { useState, useEffect } from "react";
-function App() {
-  const [pok, setPok] = useState("");
-  const [pokDetails, setPokDetails] = useState({});
-  const [error, setError] = useState("");
+// import { useState, useEffect } from "react";
+// function App() {
+//   const [pok, setPok] = useState("");
+//   const [pokDetails, setPokDetails] = useState({});
+//   const [error, setError] = useState("");
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        if (pok.length != 0) {
-          const result = await fetch(
-            `https://pokeapi.co/api/v2/pokemon/${pok}`,
-          );
-          const data = await result.json();
-          setPokDetails(data);
-        }
-      } catch (error) {
-        setError(error);
-      }
-    }
-    fetchData();
-  }, [pok]);
+//   useEffect(() => {
+//     async function fetchData() {
+//       try {
+//         if (pok.length != 0) {
+//           const result = await fetch(
+//             `https://pokeapi.co/api/v2/pokemon/${pok}`,
+//           );
+//           const data = await result.json();
+//           setPokDetails(data);
+//         }
+//       } catch (error) {
+//         setError(error);
+//       }
+//     }
+//     fetchData();
+//   }, [pok]);
+//   return (
+//     <>
+//       <header className="bg-dark text-white text-center d-flex justify-content-evenly">
+//         <h2 className="">Basic API</h2>
+//         <div>
+//           <input
+//             type="text"
+//             placeholder="Enter Pokemon Name"
+//             className="form-control"
+//             value={pok}
+//             onChange={(e) => setPok(e.target.value)}
+//           />
+//         </div>
+//       </header>
+//       <main>
+//         {pokDetails.name && (
+//           <>
+//             <img src={pokDetails.sprites.front_default} alt="" />
+//             <h2>{pokDetails.name}</h2>
+//           </>
+//         )}
+//       </main>
+//       <footer className="bg-dark text-white f-bottom text-center">This Site Becomes to Ajaya &copy ;2026</footer>
+//     </>
+//   );
+// }
+// export default App;
+
+// import React from "react";
+// import Todo from "./ReactForms/Todo";
+// function App() {
+//   return (
+//     <>
+//       <header className="bg-dark text-white py-4  fs-3 text-center">
+//         Simple To do application
+//       </header>
+//       <Todo></Todo>
+//     </>
+//   );
+// }
+
+// export default App;
+
+import React from "react";
+
+function App() {
+  const changePosition = (e) => {
+    console.log(e);
+    e.ClientX = Math.random(Math.random() * 400);
+    e.ClientX = Math.random(Math.random() * 400);
+  };
   return (
-    <>
-      <header className="bg-dark text-white text-center d-flex justify-content-evenly">
-        <h2 className="">Basic API</h2>
-        <div>
-          <input
-            type="text"
-            placeholder="Enter Pokemon Name"
-            className="form-control"
-            value={pok}
-            onChange={(e) => setPok(e.target.value)}
-          />
-        </div>
+    <div>
+      <header className=" bg-info text-center p-4">
+        <h1>React Events and Forms</h1>
       </header>
-      <main>
-        {pokDetails.name && (
-          <>
-            <img src={pokDetails.sprites.front_default} alt="" />
-            <h2>{pokDetails.name}</h2>
-          </>
-        )}
-      </main>
-      <footer className="bg-dark text-white f-bottom text-center">This Site Becomes to Ajaya &copy ;2026</footer>
-    </>
+      <div
+        className=" border d-flex flex-column justify-content-center align-items-center"
+        style={{ height: 500 }}
+      >
+        <h2 className="text-green fs-3">Do you like My classes</h2>
+        <div className="border w-25 text-center">
+          <button className="m-3 p-2 btn btn-primary">Yes</button>
+          <button
+            className="m-3 p-2 btn btn-primary"
+            onMouseOver={changePosition}
+          >
+            No
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
+
 export default App;

@@ -1,62 +1,28 @@
-Hook:
-=====
-    -Hooks are pre defined functions in react from version 16.
-    -These hooks 
-        -holds the state(useState)
-        -run side effect(useEffect)
-        -access life cycle behavior
-        -integrate with cuncurrent rendering
-    -hooks must be present in top level because react them by call order.
-    -Main or popular hooks we use :
-        
-        i.useState  
-        ===========
-        -its purpose is to make state of a value and maintains it.
+React compiler (started from react 19) handles both useMemo and useCallback by default, so there is no need of them if react compiler is there.
 
-        State is Mutable
-        =================
-        const[value,setValue]=useState(initialValue)
-        -value containes initially initialValue and setValue is a function
-         that is used to change/replace the value.
-        -state is asynchronous so the next synchronous lines will run first
-         Ex: setValue(5)
+Events  and Forms in react:
+===========================
+events are the actions done by the user to trigger a function call, a change in UI or any action, based on users actions. events are divided by multiple such as 
+keyboard, mouse, form events etc..
 
-        ii.useEffect
-        ============
-        -it is used to run side effect/async function such as API
-         calls, timer or cleanup logic.
-         useEffect(callbackFunction, dependencyArray)
-        -Empty dependence array - run once
-        -dependencyArray with value - run at starting and everytime the state of
-         those values changes.
-        -no dependencyArray - run at starting and everytime, any value state changes.
+Ex:-imagine user clicks a button and modal need to be opened.
+we invoke an event onClick to get the desired result.
 
-        iii.useMemo:
-        ============
-        -it is used for memorize or cache expensive calculations
-        useMemo(callbackFunction, dependencyArray)
-        -This should be used for strict calculations
+in jsx all events were camelcased and react handles events using something called synthetic events.
+react does not use browser events directly so it wraps them in a synthetic event.
 
-        iv.useCallback:
-        ===============
-        -it is used to cache function.
-        -it maintain the stable identity of function.
-        -it is useful when passing callbacks to memorized children
-        -it is also useful to safeguard from re-render for children dependencies.
-        useCallback(callbackFunction, dependencyArray)
+this is html code
+<button onclick-"add()">Click Me</button>
 
-        v.useRef:
-        =========
-        -it is used to do DOM manipulation.
-        -it assumes Reference for every element of DOM.
-        -Mainly used to store values, counters, flag, trimers etc...
+react code
+<button onClick={add}>Click Me</button>
+<button onClick={()=>add(5,3)}>Click Me</button>
 
-
-
-
-
-
-
-
+Event always pass an object by default called event object which handles events like controled, target etc..
+Ex:
+function getData(){
+    console.log(e.target.textContent)
+}
+<button onClick={getData}>Click Me </button>
 
 

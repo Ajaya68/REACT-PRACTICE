@@ -243,7 +243,7 @@ React provides a Hook called **`useState`** for managing state in function compo
 
 #### What is a Hook?
 
-A **Hook** is a special React function that lets function components use React features such as:
+A **Hook** is a special React function that allows function components use React features such as:
 
 - State
 - Effects
