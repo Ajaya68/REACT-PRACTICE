@@ -39,6 +39,11 @@ A simple, beginner-friendly guide to understanding React.
     - [Controlled Components](#1-controlled-components)
     - [Uncontrolled Components](#2-uncontrolled-components)
 16. [React Routing](#react-routing)
+17. [Advanced React Routing](#advanced-react-routing)
+    - [404 Not Found Page](#5-404-not-found-page)
+    - [Programmatic Navigation](#6-programmatic-navigation)
+    - [URL Parameters](#7-url-parameters)
+    - [Nested Routes](#8-nested-routes)
 
 ---
 
@@ -1209,6 +1214,247 @@ export default App;
 
 ---
 
+## Advanced React Routing
+
+### Step 5. 404 Not Found Page
+
+If a user navigates to a URL that doesn't match any route, we show a **Not Found** page. Use the wildcard `"*"` path to catch all undefined routes:
+
+```jsx
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+function Home() {
+    return <h1>Home Page</h1>;
+}
+
+function NotFound() {
+    return <h1>404 - Page Not Found</h1>;
+}
+
+function App() {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                {/* Wildcard route - catches all undefined paths */}
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </BrowserRouter>
+    );
+}
+
+export default App;
+```
+
+**How it works:**
+
+| URL | Component Displayed |
+|-----|---------------------|
+| `localhost:5173/` | `<Home />` |
+| `localhost:5173/anything` | `<NotFound />` |
+
+> **Note:** The `*` route should always be placed **last** because React matches routes in order.
+
+---
+
+### 6. Programmatic Navigation
+
+Sometimes you need to navigate to another page **programmatically** — after a button click, form submission, or after a specific time. For this, use the **`useNavigate`** hook.
+
+#### Example: Navigate After Button Click
+
+```jsx
+import { useNavigate } from "react-router-dom";
+
+function LoginPage() {
+    const navigate = useNavigate();
+
+    const handleLogin = () => {
+        // Perform login logic here...
+        console.log("User logged in!");
+
+        // Navigate to home page after login
+        navigate("/");
+    };
+
+    return (
+        <div>
+            <h1>Login Page</h1>
+            <button onClick={handleLogin}>Login</button>
+        </div>
+    );
+}
+
+export default LoginPage;
+```
+
+#### Example: Navigate After 3 Seconds
+
+```jsx
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
+function ThankYou() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            navigate("/"); // Redirect to home after 3 seconds
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [navigate]);
+
+    return <h1>Thank you! Redirecting to home...</h1>;
+}
+
+export default ThankYou;
+```
+
+#### Navigate Back
+
+```jsx
+const navigate = useNavigate();
+
+navigate(-1); // Go back one page (like browser back button)
+navigate(1);  // Go forward one page
+```
+
+---
+
+### 7. URL Parameters
+
+URL parameters let you pass **dynamic values** in the URL. Use the **`useParams`** hook to access them.
+
+**Example URL:** `https://amazon.com/product?pid=123456`
+
+#### Example: Dynamic Route with URL Params
+
+```jsx
+import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom";
+
+function ProductDetail() {
+    const { productId } = useParams();
+    return <h1>Product ID: {productId}</h1>;
+}
+
+function ProductList() {
+    return (
+        <div>
+            <h1>Products</h1>
+            <Link to="/product/101">Product 101</Link>
+            <br />
+            <Link to="/product/202">Product 202</Link>
+        </div>
+    );
+}
+
+function App() {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<ProductList />} />
+                <Route path="/product/:productId" element={<ProductDetail />} />
+            </Routes>
+        </BrowserRouter>
+    );
+}
+
+export default App;
+```
+
+**How it works:**
+
+| URL | `useParams()` Returns | Displayed |
+|-----|----------------------|-----------|
+| `/product/101` | `{ productId: "101" }` | Product ID: 101 |
+| `/product/202` | `{ productId: "202" }` | Product ID: 202 |
+
+> **Note:** The `:` prefix in `:productId` tells React Router that this is a **dynamic parameter**.
+
+---
+
+### 8. Nested Routes
+
+When one route is **inside another route**, they are called **nested routes**. Use the **`<Outlet />`** component to render child routes.
+
+#### Example: Dashboard with Nested Routes
+
+```jsx
+import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
+
+// Parent Layout Component
+function Dashboard() {
+    return (
+        <div>
+            <h1>Dashboard</h1>
+            <nav>
+                <Link to="profile">Profile</Link> |{" "}
+                <Link to="settings">Settings</Link>
+            </nav>
+
+            {/* Child routes render here */}
+            <Outlet />
+        </div>
+    );
+}
+
+// Child Components
+function Profile() {
+    return <h2>User Profile</h2>;
+}
+
+function Settings() {
+    return <h2>User Settings</h2>;
+}
+
+function App() {
+    return (
+        <BrowserRouter>
+            <Routes>
+                {/* Parent Route */}
+                <Route path="dashboard" element={<Dashboard />}>
+                    {/* Child Routes */}
+                    <Route path="profile" element={<Profile />} />
+                    <Route path="settings" element={<Settings />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    );
+}
+
+export default App;
+```
+
+**How it works:**
+
+| URL | Component Displayed |
+|-----|---------------------|
+| `/dashboard` | `<Dashboard />` (no child) |
+| `/dashboard/profile` | `<Dashboard />` + `<Profile />` |
+| `/dashboard/settings` | `<Dashboard />` + `<Settings />` |
+
+#### Visual Structure
+
+```
+/dashboard          → Shows Dashboard + Outlet (empty)
+/dashboard/profile  → Shows Dashboard + Profile in Outlet
+/dashboard/settings → Shows Dashboard + Settings in Outlet
+```
+
+---
+
+### Quick Reference: Advanced Routing
+
+| Feature | Hook / Component | Purpose |
+|---------|-----------------|---------|
+| **404 Page** | `<Route path="*">` | Catch all undefined routes |
+| **Programmatic Nav** | `useNavigate()` | Navigate without `<Link>` |
+| **URL Parameters** | `useParams()` | Get dynamic values from URL |
+| **Nested Routes** | `<Outlet />` | Render child routes inside parent |
+
+---
+
 ## Quick Recap
 
 | Topic                  | One-Line Summary                                         |
@@ -1230,5 +1476,8 @@ export default App;
 | **Controlled Forms**   | React manages form state via useState.                   |
 | **Uncontrolled Forms** | DOM manages form state via useRef.                       |
 | **React Router**       | Enables navigation without page reloads.                 |
+| **useNavigate**        | Navigate programmatically without page reloads.          |
+| **useParams**          | Access dynamic URL parameters.                           |
+| **Outlet**             | Renders child routes inside a parent route.              |
 
 Happy learning with React!

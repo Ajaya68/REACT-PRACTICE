@@ -1,41 +1,17 @@
-React Routing:
+v. if you need a page which depicts not found page, then route path should bee "*"
+
+    <Route path="*" element={<NotFoundComponent />} />
+
+programatic navigation:
+==========================
+in case we want to make a page navgate to another programatically (after clicking a button/after specific time etc... ) then we can use hook called "useNavigate"
+
+URL Parameters:
+================
+to get url Parameters, you can use useParams hooks.
+ex: https://amazon.com?pid=123456
+
+nested routes:
 ==============
-React cannot do/provide routing by default. to do the routing we use "react router DOM".
-It is the standard library for enabling navigation between without reloading the browser in react web applictions.
+incase one route is inside another route they are termed as nested routes. for them we can use <Outlet /> to print child routes.
 
-steps:
-======
-i. npm install react-router-dom
-ii. we need to wrap the complete code or app into BrowserRouter. it enables routing to entire App.
-
-    function App(){
-        return (
-            <div>
-            //code
-            </div>
-        )
-    }
-
-    instead 
-
-    import {BrowserRouter} from 'react-router-dom'
-    function Appp(){
-        return (
-            <BrowserRouter>
-            //code
-            </BrowserRouter
-        )
-    }
-
-iii. we can define routes and each route with path and elements.
-        <Routes>
-            <Route path="about" element={<AboutComponent /> }/>
-            <Route path="contact" element={<ContactComponent /> }/>
-        </Routes>
-
-        if my website loads at localhost:5173 and if i goto localhost:5173/about it shows AboutComponent.
-
-iv. if i want to go to specificpath by clicking a link without reloading the page, then i have to use 
-    <Link to="path"> </Link> instead of anchor tag.
-
-    <Link to="/about"> Go to About Page </Link>
