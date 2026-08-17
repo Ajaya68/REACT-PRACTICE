@@ -113,36 +113,41 @@
 
 // export default App;
 
-import React from "react";
+// import React from 'react'
+// import { useState } from "react";
+// import ReactForm from "./ReactForms/ReactForm";
+// function App() {
+//   const [userName, setUserName] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   return (
+//     <div>
+//       <ReactForm
+//         userName={userName}
+//         setUserName={setUserName}
+//         email={email}
+//         setEmail={setEmail}
+//         password={password}
+//         setPassword={setPassword}
+//       ></ReactForm>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+
+
+
+import React from 'react'
 
 function App() {
-  const changePosition = (e) => {
-    console.log(e);
-    e.ClientX = Math.random(Math.random() * 400);
-    e.ClientX = Math.random(Math.random() * 400);
-  };
   return (
     <div>
-      <header className=" bg-info text-center p-4">
-        <h1>React Events and Forms</h1>
-      </header>
-      <div
-        className=" border d-flex flex-column justify-content-center align-items-center"
-        style={{ height: 500 }}
-      >
-        <h2 className="text-green fs-3">Do you like My classes</h2>
-        <div className="border w-25 text-center">
-          <button className="m-3 p-2 btn btn-primary">Yes</button>
-          <button
-            className="m-3 p-2 btn btn-primary"
-            onMouseOver={changePosition}
-          >
-            No
-          </button>
-        </div>
-      </div>
+      
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

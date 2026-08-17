@@ -1,28 +1,41 @@
-React compiler (started from react 19) handles both useMemo and useCallback by default, so there is no need of them if react compiler is there.
+React Routing:
+==============
+React cannot do/provide routing by default. to do the routing we use "react router DOM".
+It is the standard library for enabling navigation between without reloading the browser in react web applictions.
 
-Events  and Forms in react:
-===========================
-events are the actions done by the user to trigger a function call, a change in UI or any action, based on users actions. events are divided by multiple such as 
-keyboard, mouse, form events etc..
+steps:
+======
+i. npm install react-router-dom
+ii. we need to wrap the complete code or app into BrowserRouter. it enables routing to entire App.
 
-Ex:-imagine user clicks a button and modal need to be opened.
-we invoke an event onClick to get the desired result.
+    function App(){
+        return (
+            <div>
+            //code
+            </div>
+        )
+    }
 
-in jsx all events were camelcased and react handles events using something called synthetic events.
-react does not use browser events directly so it wraps them in a synthetic event.
+    instead 
 
-this is html code
-<button onclick-"add()">Click Me</button>
+    import {BrowserRouter} from 'react-router-dom'
+    function Appp(){
+        return (
+            <BrowserRouter>
+            //code
+            </BrowserRouter
+        )
+    }
 
-react code
-<button onClick={add}>Click Me</button>
-<button onClick={()=>add(5,3)}>Click Me</button>
+iii. we can define routes and each route with path and elements.
+        <Routes>
+            <Route path="about" element={<AboutComponent /> }/>
+            <Route path="contact" element={<ContactComponent /> }/>
+        </Routes>
 
-Event always pass an object by default called event object which handles events like controled, target etc..
-Ex:
-function getData(){
-    console.log(e.target.textContent)
-}
-<button onClick={getData}>Click Me </button>
+        if my website loads at localhost:5173 and if i goto localhost:5173/about it shows AboutComponent.
 
+iv. if i want to go to specificpath by clicking a link without reloading the page, then i have to use 
+    <Link to="path"> </Link> instead of anchor tag.
 
+    <Link to="/about"> Go to About Page </Link>

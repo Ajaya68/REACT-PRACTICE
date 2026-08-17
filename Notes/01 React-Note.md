@@ -33,6 +33,12 @@ A simple, beginner-friendly guide to understanding React.
     - [useMemo](#3-usememo)
     - [useCallback](#4-usecallback)
     - [useRef](#5-useref)
+13. [React Compiler (React 19+)](#react-compiler-react-19)
+14. [Events in React](#events-in-react)
+15. [Forms in React](#forms-in-react)
+    - [Controlled Components](#1-controlled-components)
+    - [Uncontrolled Components](#2-uncontrolled-components)
+16. [React Routing](#react-routing)
 
 ---
 
@@ -46,8 +52,8 @@ A simple, beginner-friendly guide to understanding React.
 
 ## React.js vs React Native
 
-| React.js                    | React Native                    |
-| --------------------------- | ------------------------------- |
+| React.js                                 | React Native                     |
+| ---------------------------------------- | -------------------------------- |
 | Used for **web applications** / websites | Used for **mobile applications** |
 
 ---
@@ -64,8 +70,8 @@ React is mainly used to build the UI of:
 ## Competitors and Advantages of React
 
 - React can be replaced with **Angular** or **Vue**.
-- **Angular** is a JavaScript *framework*.
-- **Vue** is also a JavaScript *library*.
+- **Angular** is a JavaScript _framework_.
+- **Vue** is also a JavaScript _library_.
 - Advantages of React over its competitors:
   - Simpler and easier to learn
   - Supports **Virtual DOM** for better performance
@@ -103,19 +109,19 @@ npm run build
 
 ## React Files & Folders
 
-| File / Folder      | Purpose                                                                 |
-| ------------------ | ----------------------------------------------------------------------- |
-| `package.json`     | Contains **metadata** about your application.                           |
-| `package-lock.json`| Contains metadata of `package.json`.                                    |
-| `vite.config.js`   | Contains settings for **Vite**.                                         |
-| `.gitignore`       | Contains files that are **ignored by Git**.                             |
-| `eslint`           | **Notifies and observes errors** in the code.                           |
-| `node_modules`     | Contains the **actual code** of all installed packages.                 |
-| `public`           | For **static resources**.                                               |
-| `src`              | For **dynamic resources**.                                              |
-| `index.html`       | **Main entry point** of the app; contains the `head` and `body`.        |
-| `main.jsx`         | **Renders** `App.jsx` into the `div` with id `root`. In React, loading is called **rendering**. |
-| `App.jsx`          | Contains the **actual body code** in JSX format.                        |
+| File / Folder       | Purpose                                                                                         |
+| ------------------- | ----------------------------------------------------------------------------------------------- |
+| `package.json`      | Contains **metadata** about your application.                                                   |
+| `package-lock.json` | Contains metadata of `package.json`.                                                            |
+| `vite.config.js`    | Contains settings for **Vite**.                                                                 |
+| `.gitignore`        | Contains files that are **ignored by Git**.                                                     |
+| `eslint`            | **Notifies and observes errors** in the code.                                                   |
+| `node_modules`      | Contains the **actual code** of all installed packages.                                         |
+| `public`            | For **static resources**.                                                                       |
+| `src`               | For **dynamic resources**.                                                                      |
+| `index.html`        | **Main entry point** of the app; contains the `head` and `body`.                                |
+| `main.jsx`          | **Renders** `App.jsx` into the `div` with id `root`. In React, loading is called **rendering**. |
+| `App.jsx`           | Contains the **actual body code** in JSX format.                                                |
 
 ---
 
@@ -174,7 +180,7 @@ React components can mainly be written in two ways:
 
 ```jsx
 function Student() {
-    return <h1>Student Component</h1>;
+  return <h1>Student Component</h1>;
 }
 ```
 
@@ -190,11 +196,11 @@ function Student() {
 
 ```jsx
 function Student(props) {
-    return <h1>{props.name}</h1>;
+  return <h1>{props.name}</h1>;
 }
 
 function App() {
-    return <Student name="Ajaya" />;
+  return <Student name="Ajaya" />;
 }
 ```
 
@@ -253,10 +259,10 @@ A **Hook** is a special React function that allows function components use React
 Examples of Hooks:
 
 ```jsx
-useState()
-useEffect()
-useContext()
-useRef()
+useState();
+useEffect();
+useContext();
+useRef();
 ```
 
 #### `useState()` Syntax
@@ -280,11 +286,11 @@ const [count, setCount] = useState(0);
 
 Here:
 
-| Part       | Meaning                              |
-| ---------- | ------------------------------------ |
-| `count`    | Current state value                  |
-| `setCount` | Function used to update the state    |
-| `0`        | Initial value                        |
+| Part       | Meaning                           |
+| ---------- | --------------------------------- |
+| `count`    | Current state value               |
+| `setCount` | Function used to update the state |
+| `0`        | Initial value                     |
 
 > **Note:** State in React is **asynchronous** (it takes some time to run). So the line after `setX()` will be executed first.
 
@@ -300,16 +306,14 @@ console.log(x); // x = 0
 import { useState } from "react";
 
 function Counter() {
-    const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
-    return (
-        <div>
-            <h1>{count}</h1>
-            <button onClick={() => setCount(count + 1)}>
-                Increase
-            </button>
-        </div>
-    );
+  return (
+    <div>
+      <h1>{count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+    </div>
+  );
 }
 
 export default Counter;
@@ -366,11 +370,11 @@ Example of JSON:
 
 ```json
 [
-    {
-        "id": 1,
-        "name": "Ajaya",
-        "course": "MCA"
-    }
+  {
+    "id": 1,
+    "name": "Ajaya",
+    "course": "MCA"
+  }
 ]
 ```
 
@@ -386,7 +390,7 @@ There are two common ways to request data from an API:
 Syntax:
 
 ```js
-fetch(url, options)
+fetch(url, options);
 ```
 
 Example:
@@ -421,12 +425,12 @@ axios.post(url, data);
 
 ### Fetch vs Axios
 
-| Fetch                        | Axios                             |
-| ---------------------------- | --------------------------------- |
-| Built into the browser       | Third-party library               |
-| No installation required     | Requires installation             |
-| Returns a `Response` object  | Returns data directly in response |
-| Slightly more code           | Cleaner and simpler syntax        |
+| Fetch                       | Axios                             |
+| --------------------------- | --------------------------------- |
+| Built into the browser      | Third-party library               |
+| No installation required    | Requires installation             |
+| Returns a `Response` object | Returns data directly in response |
+| Slightly more code          | Cleaner and simpler syntax        |
 
 ### Fetch and Axios are Asynchronous
 
@@ -440,13 +444,13 @@ axios.post(url, data);
 
 ```js
 fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-        console.log(data);
-    })
-    .catch((error) => {
-        console.log(error);
-    });
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 ```
 
 **Explanation:**
@@ -460,9 +464,9 @@ fetch(url)
 
 ```js
 async function getData() {
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log(data);
 }
 ```
 
@@ -493,7 +497,7 @@ Syntax:
 
 ```jsx
 useEffect(() => {
-    // Code
+  // Code
 }, [dependencyArray]);
 ```
 
@@ -507,7 +511,7 @@ Example:
 
 ```jsx
 useEffect(() => {
-    fetchData();
+  fetchData();
 }, []);
 ```
 
@@ -523,7 +527,7 @@ The behavior of `useEffect()` depends on the **dependency array**.
 
 ```jsx
 useEffect(() => {
-    console.log("Running");
+  console.log("Running");
 });
 ```
 
@@ -537,7 +541,7 @@ useEffect(() => {
 
 ```jsx
 useEffect(() => {
-    console.log("Running Once");
+  console.log("Running Once");
 }, []);
 ```
 
@@ -550,7 +554,7 @@ useEffect(() => {
 
 ```jsx
 useEffect(() => {
-    console.log("Count Changed");
+  console.log("Count Changed");
 }, [count]);
 ```
 
@@ -622,14 +626,14 @@ setValue(5);
 import { useState } from "react";
 
 function LikeButton() {
-    const [likes, setLikes] = useState(0);
+  const [likes, setLikes] = useState(0);
 
-    return (
-        <div>
-            <p>Likes: {likes}</p>
-            <button onClick={() => setLikes(likes + 1)}>Like</button>
-        </div>
-    );
+  return (
+    <div>
+      <p>Likes: {likes}</p>
+      <button onClick={() => setLikes(likes + 1)}>Like</button>
+    </div>
+  );
 }
 
 export default LikeButton;
@@ -652,11 +656,11 @@ useEffect(callbackFunction, dependencyArray);
 
 Dependency array behavior:
 
-| Dependency Array          | When Does It Run?                                              |
-| ------------------------- | -------------------------------------------------------------- |
-| Empty `[]`                | Runs **once**                                                  |
-| With values `[value]`     | Runs at start and every time those values change               |
-| No dependency array       | Runs at start and every time **any** state changes             |
+| Dependency Array      | When Does It Run?                                  |
+| --------------------- | -------------------------------------------------- |
+| Empty `[]`            | Runs **once**                                      |
+| With values `[value]` | Runs at start and every time those values change   |
+| No dependency array   | Runs at start and every time **any** state changes |
 
 ##### Meaningful Example: Show Current Time
 
@@ -664,18 +668,18 @@ Dependency array behavior:
 import { useState, useEffect } from "react";
 
 function Clock() {
-    const [time, setTime] = useState(new Date().toLocaleTimeString());
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setTime(new Date().toLocaleTimeString());
-        }, 1000);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
 
-        // Cleanup: stops the timer when the component is removed
-        return () => clearInterval(timer);
-    }, []);
+    // Cleanup: stops the timer when the component is removed
+    return () => clearInterval(timer);
+  }, []);
 
-    return <h1>Current Time: {time}</h1>;
+  return <h1>Current Time: {time}</h1>;
 }
 
 export default Clock;
@@ -701,31 +705,33 @@ useMemo(callbackFunction, dependencyArray);
 import { useMemo, useState } from "react";
 
 function Factorial() {
-    const [number, setNumber] = useState(5);
-    const [counter, setCounter] = useState(0);
+  const [number, setNumber] = useState(5);
+  const [counter, setCounter] = useState(0);
 
-    const factorial = useMemo(() => {
-        console.log("Calculating factorial...");
-        let result = 1;
-        for (let i = 2; i <= number; i++) {
-            result *= i;
-        }
-        return result;
-    }, [number]);
+  const factorial = useMemo(() => {
+    console.log("Calculating factorial...");
+    let result = 1;
+    for (let i = 2; i <= number; i++) {
+      result *= i;
+    }
+    return result;
+  }, [number]);
 
-    return (
-        <div>
-            <input
-                type="number"
-                value={number}
-                onChange={(e) => setNumber(Number(e.target.value))}
-            />
-            <p>Factorial of {number} is {factorial}</p>
-            <button onClick={() => setCounter(counter + 1)}>
-                Counter: {counter}
-            </button>
-        </div>
-    );
+  return (
+    <div>
+      <input
+        type="number"
+        value={number}
+        onChange={(e) => setNumber(Number(e.target.value))}
+      />
+      <p>
+        Factorial of {number} is {factorial}
+      </p>
+      <button onClick={() => setCounter(counter + 1)}>
+        Counter: {counter}
+      </button>
+    </div>
+  );
 }
 
 export default Factorial;
@@ -753,24 +759,24 @@ useCallback(callbackFunction, dependencyArray);
 import { useCallback, useState, memo } from "react";
 
 const SaveButton = memo(({ onSave }) => {
-    console.log("SaveButton re-rendered");
-    return <button onClick={onSave}>Save</button>;
+  console.log("SaveButton re-rendered");
+  return <button onClick={onSave}>Save</button>;
 });
 
 function Editor() {
-    const [text, setText] = useState("");
+  const [text, setText] = useState("");
 
-    // onSave keeps the same identity unless `text` changes
-    const onSave = useCallback(() => {
-        console.log("Saving:", text);
-    }, [text]);
+  // onSave keeps the same identity unless `text` changes
+  const onSave = useCallback(() => {
+    console.log("Saving:", text);
+  }, [text]);
 
-    return (
-        <div>
-            <input value={text} onChange={(e) => setText(e.target.value)} />
-            <SaveButton onSave={onSave} />
-        </div>
-    );
+  return (
+    <div>
+      <input value={text} onChange={(e) => setText(e.target.value)} />
+      <SaveButton onSave={onSave} />
+    </div>
+  );
 }
 
 export default Editor;
@@ -795,18 +801,18 @@ export default Editor;
 import { useRef } from "react";
 
 function FocusInput() {
-    const inputRef = useRef(null);
+  const inputRef = useRef(null);
 
-    const focusInput = () => {
-        inputRef.current.focus();
-    };
+  const focusInput = () => {
+    inputRef.current.focus();
+  };
 
-    return (
-        <div>
-            <input ref={inputRef} type="text" placeholder="Type here..." />
-            <button onClick={focusInput}>Focus Input</button>
-        </div>
-    );
+  return (
+    <div>
+      <input ref={inputRef} type="text" placeholder="Type here..." />
+      <button onClick={focusInput}>Focus Input</button>
+    </div>
+  );
 }
 
 export default FocusInput;
@@ -821,20 +827,20 @@ export default FocusInput;
 import { useState, useRef, useEffect } from "react";
 
 function RenderCounter() {
-    const [count, setCount] = useState(0);
-    const renderCount = useRef(0);
+  const [count, setCount] = useState(0);
+  const renderCount = useRef(0);
 
-    useEffect(() => {
-        renderCount.current += 1;
-    });
+  useEffect(() => {
+    renderCount.current += 1;
+  });
 
-    return (
-        <div>
-            <p>Value: {count}</p>
-            <p>Times rendered: {renderCount.current}</p>
-            <button onClick={() => setCount(count + 1)}>Increase</button>
-        </div>
-    );
+  return (
+    <div>
+      <p>Value: {count}</p>
+      <p>Times rendered: {renderCount.current}</p>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+    </div>
+  );
 }
 
 export default RenderCounter;
@@ -845,21 +851,384 @@ export default RenderCounter;
 
 ---
 
+## React Compiler (React 19+)
+
+Starting from **React 19**, the **React Compiler** automatically handles `useMemo` and `useCallback` optimization.
+
+### What This Means for You
+
+- **No need** to manually wrap functions with `useMemo` or `useCallback` anymore
+- The compiler **automatically memoizes** values and functions when it detects performance benefits
+- You can focus on writing clean code without worrying about manual optimizations
+
+### Example (Before React 19)
+
+```jsx
+// Old way - manual memoization
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+const memoizedCallback = useCallback(() => doSomething(a, b), [a, b]);
+```
+
+### Example (React 19+)
+
+```jsx
+// New way - compiler handles it automatically
+const value = computeExpensiveValue(a, b);
+const callback = () => doSomething(a, b);
+```
+
+> **Note:** While the compiler handles most cases, understanding `useMemo` and `useCallback` is still important for older React versions and edge cases.
+
+---
+
+## Events in React
+
+### What Are Events?
+
+Events are **actions performed by the user** that trigger a function call, UI change, or any response. Common event types include:
+
+- **Keyboard events** (keypress, keydown)
+- **Mouse events** (click, hover)
+- **Form events** (submit, change)
+
+### Real-World Example
+
+Imagine a user clicks a button and a modal needs to open. We use the `onClick` event to handle this.
+
+### JSX Event Syntax
+
+In React JSX, all events are written in **camelCase**:
+
+```jsx
+// ❌ HTML style (wrong in JSX)
+<button onclick="add()">Click Me</button>
+
+// ✅ React style (correct)
+<button onClick={add}>Click Me</button>
+
+// With parameters
+<button onClick={() => add(5, 3)}>Click Me</button>
+```
+
+### The Event Object
+
+Every event handler receives an **event object** by default. This object contains useful information about the event:
+
+```jsx
+function getData(e) {
+  console.log(e.target.textContent); // Gets the text inside the button
+}
+
+<button onClick={getData}>Click Me</button>;
+```
+
+### Common Event Object Properties
+
+| Property               | Description                           |
+| ---------------------- | ------------------------------------- |
+| `e.target`             | The element that triggered the event  |
+| `e.target.value`       | The value of an input element         |
+| `e.target.textContent` | The text content of an element        |
+| `e.preventDefault()`   | Prevents the default browser behavior |
+
+### Example: Form Input Handler
+
+```jsx
+function handleChange(e) {
+  console.log("User typed:", e.target.value);
+}
+
+<input type="text" onChange={handleChange} />;
+```
+
+---
+
+## Forms in React
+
+Forms are used to **get data from users** (via inputs) and send it to a backend/server through APIs.
+
+### Two Ways to Handle Forms
+
+React provides two approaches for managing form data:
+
+### 1. Controlled Components
+
+In controlled components, **React manages the form state** using `useState`. The input value is controlled by React state.
+
+#### Key Features
+
+- State management is **easy and predictable**
+- Uses events like `onChange`, `onSubmit`, `onInput`
+- Data flows from state to input and back
+
+#### Example: Controlled Input
+
+```jsx
+import { useState } from "react";
+
+function ControlledForm() {
+  const [name, setName] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submitted name:", name);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Enter your name"
+      />
+      <button type="submit">Submit</button>
+      <p>You typed: {name}</p>
+    </form>
+  );
+}
+
+export default ControlledForm;
+```
+
+#### How It Works
+
+1. `name` state holds the current input value
+2. `onChange` updates the state every time user types
+3. `value={name}` ensures input always reflects the state
+4. `onSubmit` handles form submission
+
+### 2. Uncontrolled Components
+
+In uncontrolled components, the **DOM manages the form state** directly. We access values using `useRef()`.
+
+#### Key Features
+
+- State is managed by the **DOM**, not React
+- Use `useRef()` to access input values
+- Simpler but less predictable
+
+#### Example: Uncontrolled Input
+
+```jsx
+import { useRef } from "react";
+
+function UncontrolledForm() {
+  const nameRef = useRef(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submitted name:", nameRef.current.value);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" ref={nameRef} placeholder="Enter your name" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default UncontrolledForm;
+```
+
+#### How It Works
+
+1. `nameRef` creates a reference to the input element
+2. `ref={nameRef}` connects the reference to the input
+3. On submit, `nameRef.current.value` gets the current value directly from DOM
+
+### Controlled vs Uncontrolled: Comparison
+
+| Feature              | Controlled               | Uncontrolled          |
+| -------------------- | ------------------------ | --------------------- |
+| **State Management** | React manages state      | DOM manages state     |
+| **Value Access**     | Via `useState`           | Via `useRef`          |
+| **Validation**       | Easy to implement        | Harder to implement   |
+| **Dynamic Input**    | Ideal for dynamic inputs | Good for simple forms |
+| **Code Complexity**  | Slightly more code       | Less code             |
+| **Predictability**   | Highly predictable       | Less predictable      |
+
+### Form Libraries
+
+For complex forms, consider using:
+
+- **React Hook Form** - Lightweight and performant
+- **Formik** - Feature-rich form management
+- **Zod** - Schema-based validation (works with both libraries)
+
+```bash
+# Install React Hook Form
+npm install react-hook-form
+
+# Install Formik
+npm install formik
+
+# Install Zod for validation
+npm install zod
+```
+
+---
+
+## React Routing
+
+React **cannot** handle routing by default. To enable navigation between pages without reloading the browser, we use **React Router DOM** — the standard library for routing in React web applications.
+
+### Why Do We Need Routing?
+
+In traditional websites, clicking a link reloads the entire page. With React Router, we can navigate between different "pages" (components) **without full page reloads**, giving users a smooth, app-like experience.
+
+### Step 1: Install React Router DOM
+
+```bash
+npm install react-router-dom
+```
+
+### Step 2: Wrap App with BrowserRouter
+
+`BrowserRouter` enables routing for the entire application. Wrap your root component with it:
+
+```jsx
+// ❌ Without BrowserRouter (routing won't work)
+function App() {
+  return <div>//code</div>;
+}
+
+// ✅ With BrowserRouter (routing enabled)
+import { BrowserRouter } from "react-router-dom";
+
+function App() {
+  return <BrowserRouter>//code</BrowserRouter>;
+}
+```
+
+### Step 3: Define Routes
+
+Use `<Routes>` and `<Route>` to define which component shows for which URL path:
+
+```jsx
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import About from "./About";
+import Contact from "./Contact";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+```
+
+**How it works:**
+
+| URL                      | Component Displayed |
+| ------------------------ | ------------------- |
+| `localhost:5173/about`   | `<About />`         |
+| `localhost:5173/contact` | `<Contact />`       |
+
+### Step 4: Navigate with Link (Not Anchor Tags)
+
+To navigate between pages **without reloading**, use `<Link>` instead of `<a>` tags:
+
+```jsx
+import { Link } from "react-router-dom";
+
+function Navbar() {
+  return (
+    <nav>
+      {/* ❌ Don't use anchor tags - they reload the page */}
+      <a href="/about">About</a>
+
+      {/* ✅ Use Link - no page reload */}
+      <Link to="/about">Go to About Page</Link>
+      <Link to="/contact">Go to Contact Page</Link>
+    </nav>
+  );
+}
+
+export default Navbar;
+```
+
+### Complete Example: Simple Multi-Page App
+
+```jsx
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+
+function Home() {
+  return <h1>Home Page</h1>;
+}
+
+function About() {
+  return <h1>About Page</h1>;
+}
+
+function Contact() {
+  return <h1>Contact Page</h1>;
+}
+
+function Navbar() {
+  return (
+    <nav>
+      <Link to="/">Home</Link> | <Link to="/about">About</Link> |{" "}
+      <Link to="/contact">Contact</Link>
+    </nav>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+```
+
+### Key Points to Remember
+
+| Concept              | Description                           |
+| -------------------- | ------------------------------------- |
+| `BrowserRouter`      | Wraps the app to enable routing       |
+| `<Routes>`           | Container for all route definitions   |
+| `<Route>`            | Maps a URL path to a component        |
+| `<Link to="">`       | Navigates without reloading the page  |
+| **Avoid `<a>` tags** | They cause full page reloads in React |
+
+---
+
 ## Quick Recap
 
-| Topic       | One-Line Summary                                                   |
-| ----------- | ------------------------------------------------------------------ |
-| **React**   | A JavaScript library for building user interfaces.                 |
-| **JSX**     | Lets us write HTML inside JavaScript.                              |
-| **Component** | A reusable and independent part of the UI.                       |
-| **Props**   | Pass data from parent to child (read-only).                        |
-| **State**   | Data that changes over time and causes re-rendering.               |
-| **Virtual DOM** | A lightweight copy of the UI used for efficient updates.      |
-| **API**     | A bridge between the client and the server.                        |
-| **useState** | Hook for managing state in function components.                  |
-| **useEffect** | Hook for side effects like API calls.                            |
-| **useMemo**  | Hook for caching expensive calculations.                         |
-| **useCallback** | Hook for caching functions (stable identity).                 |
-| **useRef**   | Hook for DOM manipulation and storing values.                    |
+| Topic                  | One-Line Summary                                         |
+| ---------------------- | -------------------------------------------------------- |
+| **React**              | A JavaScript library for building user interfaces.       |
+| **JSX**                | Lets us write HTML inside JavaScript.                    |
+| **Component**          | A reusable and independent part of the UI.               |
+| **Props**              | Pass data from parent to child (read-only).              |
+| **State**              | Data that changes over time and causes re-rendering.     |
+| **Virtual DOM**        | A lightweight copy of the UI used for efficient updates. |
+| **API**                | A bridge between the client and the server.              |
+| **useState**           | Hook for managing state in function components.          |
+| **useEffect**          | Hook for side effects like API calls.                    |
+| **useMemo**            | Hook for caching expensive calculations.                 |
+| **useCallback**        | Hook for caching functions (stable identity).            |
+| **useRef**             | Hook for DOM manipulation and storing values.            |
+| **React Compiler**     | Automatically handles memoization in React 19+.          |
+| **Events**             | User actions that trigger functions (camelCase in JSX).  |
+| **Controlled Forms**   | React manages form state via useState.                   |
+| **Uncontrolled Forms** | DOM manages form state via useRef.                       |
+| **React Router**       | Enables navigation without page reloads.                 |
 
 Happy learning with React!
