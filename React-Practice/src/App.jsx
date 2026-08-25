@@ -136,18 +136,29 @@
 
 // export default App;
 
-
-
-
-
 // import React from 'react'
-
+import { useState } from "react";
+import { ThemeContext } from "./main";
+import Component1 from "./ContextAPI/Component1";
 function App() {
+  const [theme, setTheme] = useState("light");
+
   return (
-    <div>
-      
-    </div>
-  )
+    <>
+      <ThemeContext.Provider value={{ theme, setTheme }}>
+        <Component1></Component1>
+      </ThemeContext.Provider>
+      <button
+        onClick={() => {
+          let x = theme == "light" ? "dark" : "light";
+          setTheme(x);
+        }}
+        className="btn btn-primary"
+      >
+        Click Me
+      </button>
+    </>
+  );
 }
 
-export default App
+export default App;

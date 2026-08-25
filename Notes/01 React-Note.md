@@ -44,6 +44,16 @@ A simple, beginner-friendly guide to understanding React.
     - [Programmatic Navigation](#6-programmatic-navigation)
     - [URL Parameters](#7-url-parameters)
     - [Nested Routes](#8-nested-routes)
+18. [Context API](#context-api)
+    - [Prop Drilling](#the-problem-prop-drilling)
+    - [How to Use Context API](#how-to-use-context-api-step-by-step)
+    - [Props vs Context API](#props-vs-context-api)
+19. [React Redux](#react-redux)
+    - [Redux Architecture](#redux-architecture-visual-guide)
+    - [Redux vs Flux](#redux-vs-flux)
+    - [The 3 Pillars: Store, Action, Reducer](#the-3-pillars-of-redux)
+    - [Data Flow](#redux-data-flow-step-by-step)
+    - [Implementation Steps](#step-1-create-actions)
 
 ---
 
@@ -1455,6 +1465,807 @@ export default App;
 
 ---
 
+## Context API
+
+### The Problem: Prop Drilling
+
+In React, data flows from parent to child via **props**. But sometimes, a value needs to go from a top-level component to a deeply nested component. This forces the value to pass through **multiple middle components** that don't even use it.
+
+This problem is called **Prop Drilling**.
+
+### What is Prop Drilling?
+
+Prop Drilling is the process of passing data from a parent component through multiple intermediate components to reach a deeply nested child component, even though those intermediate components don't need the data.
+
+### Visual Example
+
+```
+App (has user data)
+ └── Header
+      └── Navbar
+           └── UserProfile (needs user data)
+```
+
+In this example, if `App` wants to send `user` data to `UserProfile`:
+
+```jsx
+// ❌ Prop Drilling - Passing data through unnecessary components
+<App user={user}>
+  <Header user={user}>        // Header doesn't use user!
+    <Navbar user={user}>      // Navbar doesn't use user!
+      <UserProfile user={user} />  // Finally uses user!
+    </Navbar>
+  </Header>
+</App>
+```
+
+### Why is Prop Drilling a Problem?
+
+| Problem | Description |
+| ------- | ----------- |
+| **Messy Code** | Intermediate components receive props they don't need |
+| **Hard to Maintain** | Changes in data structure require updating multiple components |
+| **Performance Issues** | Unnecessary re-renders in components that just pass props |
+| **Confusing** | Hard to track where data is coming from |
+
+### The Solution: Context API
+
+**Context API** solves prop drilling by providing a way to share data globally across the component tree without passing props manually through every level.
+
+Think of Context as a **global container** that any component can access directly.
+
+---
+
+### How to Use Context API: Step-by-Step
+
+#### Step 1: Create a Context
+
+Use `createContext()` to create a new context.
+
+```jsx
+import { createContext } from "react";
+
+// Create the context with a default value
+const UserContext = createContext("Guest"); // default value
+```
+
+#### Step 2: Provide the Context to the App
+
+Use the `Provider` component to make the context value available to all child components.
+
+```jsx
+import { UserContext } from "./UserContext";
+
+function App() {
+  const user = "Ajaya";
+
+  return (
+    <UserContext.Provider value={user}>
+      <Header />
+    </UserContext.Provider>
+  );
+}
+```
+
+Now every component inside `UserContext.Provider` can access the `user` value.
+
+#### Step 3: Consume the Context in Any Component
+
+Use the `useContext()` hook to access the context value.
+
+```jsx
+import { useContext } from "react";
+import { UserContext } from "./UserContext";
+
+function UserProfile() {
+  const user = useContext(UserContext);
+
+  return <h2>Welcome, {user}!</h2>;
+}
+```
+
+### Complete Working Example
+
+```jsx
+import { createContext, useContext } from "react";
+
+// Step 1: Create context
+const UserContext = createContext("Guest");
+
+// Child Component (deeply nested)
+function UserProfile() {
+  const user = useContext(UserContext);
+  return <h2>User Profile: {user}</h2>;
+}
+
+// Intermediate Component (doesn't use user - just renders children)
+function Navbar() {
+  return (
+    <nav>
+      <UserProfile />
+    </nav>
+  );
+}
+
+// Another Intermediate Component
+function Header() {
+  return (
+    <header>
+      <Navbar />
+    </header>
+  );
+}
+
+// Parent Component (provides the value)
+function App() {
+  const user = "Ajaya";
+
+  return (
+    <UserContext.Provider value={user}>
+      <Header />
+    </UserContext.Provider>
+  );
+}
+
+export default App;
+```
+
+**Result:** `UserProfile` directly receives `"Ajaya"` without prop drilling!
+
+---
+
+### Props vs Context API
+
+| Feature | Props | Context API |
+| ------- | ----- | ----------- |
+| **Data Flow** | Parent to Child | Global (any component) |
+| **Middle Components** | Must pass through | Not needed |
+| **Code Complexity** | Increases with depth | Stays clean |
+| **Best For** | Simple parent-child | Deeply nested data |
+
+---
+
+### When to Use Context API
+
+- **Theme data** (dark mode / light mode)
+- **User authentication** (logged-in user info)
+- **Language / locale** (internationalization)
+- **Any data needed by many components** at different nesting levels
+
+---
+
+### Common Mistakes to Avoid
+
+```jsx
+// ❌ Wrong: Creating context inside component
+function App() {
+  const UserContext = createContext(); // Creates new context every render!
+  return <UserContext.Provider value="Ajaya">...</UserContext.Provider>;
+}
+
+// ✅ Correct: Create context outside the component
+const UserContext = createContext();
+
+function App() {
+  return <UserContext.Provider value="Ajaya">...</UserContext.Provider>;
+}
+```
+
+---
+
+## React Redux
+
+### What is Redux?
+
+Redux is an open-source JavaScript library used to **manage application state**. It was introduced by Dan Abramov and Andrew Clark in **2015**.
+
+**React Redux** is the official React binding for Redux. It allows React components to:
+- **Read data** from a Redux Store
+- **Dispatch Actions** to update data in the Store
+
+### Why Use Redux?
+
+| Benefit | Description |
+| ------- | ----------- |
+| **Official Binding** | Kept up-to-date with React API changes |
+| **Good Architecture** | Encourages clean React patterns |
+| **Performance** | Components re-render only when needed |
+| **Scalable** | Manages state through unidirectional data flow |
+
+---
+
+### Redux vs Flux
+
+| Feature | Redux | Flux |
+| ------- | ----- | ---- |
+| **Stores** | Single Store | Multiple Stores |
+| **Dispatcher** | No Dispatcher | Has Dispatcher |
+| **Action Handling** | Store handles actions directly | Dispatcher forwards to Store |
+
+> Redux was inspired by Flux but removed unnecessary complexity.
+
+---
+
+### Redux Architecture: Visual Guide
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                      REDUX ARCHITECTURE                         │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│   ┌──────────┐    ┌──────────┐    ┌──────────┐                 │
+│   │  VIEW    │───▶│  ACTION  │───▶│ REDUCER  │                 │
+│   │ (React)  │    │ (Object) │    │ (Func)   │                 │
+│   └──────────┘    └──────────┘    └──────────┘                 │
+│        ▲                                    │                   │
+│        │                                    ▼                   │
+│        │                              ┌──────────┐             │
+│        └──────────────────────────────│  STORE   │             │
+│                                       │ (State)  │             │
+│                                       └──────────┘             │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### The 3 Pillars of Redux
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐     │
+│   │    STORE    │   │   ACTION    │   │  REDUCER    │     │
+│   │             │   │             │   │             │     │
+│   │ • Holds     │   │ • Payload   │   │ • Pure      │     │
+│   │   entire    │   │   describing│   │   function  │     │
+│   │   app state │   │   event     │   │             │     │
+│   │             │   │             │   │ • Takes     │     │
+│   │ • Single    │   │ • Type +    │   │   Action +  │     │
+│   │   source    │   │   data      │   │   State     │     │
+│   │   of truth  │   │             │   │             │     │
+│   │             │   │ • Dispatched│   │ • Returns   │     │
+│   │ • brain of  │   │   by View   │   │   new State │     │
+│   │   Redux     │   │             │   │             │     │
+│   └─────────────┘   └─────────────┘   └─────────────┘     │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+#### 1. Store
+
+> A Store is where the **entire state** of your application lives. It manages the application status and has a `dispatch(action)` function.
+
+**Think of it as:** The brain responsible for all moving parts in Redux.
+
+#### 2. Action
+
+> Actions are **payloads** sent from the View that can be read by Reducers. They are plain objects containing information about what happened.
+
+**Action Object Structure:**
+```jsx
+{
+  type: 'ADD_TODO',      // What happened?
+  id: 1,                  // Additional data
+  text: 'Learn Redux'    // Payload
+}
+```
+
+#### 3. Reducer
+
+> Reducers read payloads from Actions and update the Store via state. They are **pure functions** that return a new state from the initial state.
+
+**Reducer Function:**
+```jsx
+// (previousState, action) => newState
+function reducer(state = initialState, action) {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return { ...state, todos: [...state.todos, action.payload] };
+    default:
+      return state;
+  }
+}
+```
+
+---
+
+### Redux Data Flow: Step by Step
+
+```
+┌────────────────────────────────────────────────────────────────────┐
+│                    UNIDIRECTIONAL DATA FLOW                        │
+├────────────────────────────────────────────────────────────────────┤
+│                                                                    │
+│  STEP 1: User interacts with UI                                    │
+│  ┌──────────────────┐                                              │
+│  │   User clicks    │                                              │
+│  │   "Add Todo"     │                                              │
+│  └────────┬─────────┘                                              │
+│           │                                                        │
+│  STEP 2: Dispatch Action                                           │
+│  ┌────────▼─────────┐                                              │
+│  │  dispatch({      │                                              │
+│  │    type: 'ADD',  │                                              │
+│  │    text: 'Buy'   │                                              │
+│  │  })              │                                              │
+│  └────────┬─────────┘                                              │
+│           │                                                        │
+│  STEP 3: Reducer processes                                         │
+│  ┌────────▼─────────┐                                              │
+│  │  switch(action.  │                                              │
+│  │    type) {       │                                              │
+│  │    case 'ADD':   │                                              │
+│  │      return     │                                              │
+│  │      newState   │                                              │
+│  │  }              │                                              │
+│  └────────┬─────────┘                                              │
+│           │                                                        │
+│  STEP 4: Store updates                                             │
+│  ┌────────▼─────────┐                                              │
+│  │  store.replace   │                                              │
+│  │    State(newState│                                              │
+│  └────────┬─────────┘                                              │
+│           │                                                        │
+│  STEP 5: UI re-renders                                             │
+│  ┌────────▼─────────┐                                              │
+│  │  Components      │                                              │
+│  │  re-render with  │                                              │
+│  │  new data        │                                              │
+│  └──────────────────┘                                              │
+│                                                                    │
+└────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Installation
+
+**Requirements:** React 16.8.3 or later
+
+```bash
+npm install redux react-redux --save
+```
+
+---
+
+### Project Structure
+
+```
+src/
+├── actions/
+│   └── index.js          # Action creators
+├── reducers/
+│   ├── index.js          # combineReducers
+│   ├── todos.js          # Todo reducer
+│   └── visibilityFilter.js
+├── components/
+│   ├── App.js
+│   ├── Todo.js
+│   ├── TodoList.js
+│   ├── Footer.js
+│   └── Link.js
+├── containers/
+│   ├── AddTodo.js
+│   ├── FilterLink.js
+│   └── VisibleTodoList.js
+└── index.js              # Store creation & Provider
+```
+
+---
+
+### Step 1: Create Actions
+
+Actions describe **what happened** in the app.
+
+```jsx
+// actions/index.js
+let nextTodoId = 0;
+
+export const addTodo = (text) => ({
+  type: "ADD_TODO",
+  id: nextTodoId++,
+  text,
+});
+
+export const setVisibilityFilter = (filter) => ({
+  type: "SET_VISIBILITY_FILTER",
+  filter,
+});
+
+export const toggleTodo = (id) => ({
+  type: "TOGGLE_TODO",
+  id,
+});
+
+export const VisibilityFilters = {
+  SHOW_ALL: "SHOW_ALL",
+  SHOW_COMPLETED: "SHOW_COMPLETED",
+  SHOW_ACTIVE: "SHOW_ACTIVE",
+};
+```
+
+**Visual Flow:**
+```
+User clicks "Add Todo"
+        │
+        ▼
+┌─────────────────────┐
+│ dispatch(           │
+│   addTodo("Learn")  │
+│ )                   │
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│ {                   │
+│   type: 'ADD_TODO', │
+│   id: 0,            │
+│   text: 'Learn'     │
+│ }                   │
+└─────────────────────┘
+```
+
+---
+
+### Step 2: Create Reducers
+
+Reducers specify **how state changes** in response to actions.
+
+**todos.js:**
+```jsx
+const todos = (state = [], action) => {
+  switch (action.type) {
+    case "ADD_TODO":
+      return [
+        ...state,
+        {
+          id: action.id,
+          text: action.text,
+          completed: false,
+        },
+      ];
+    case "TOGGLE_TODO":
+      return state.map((todo) =>
+        todo.id === action.id
+          ? { ...todo, completed: !todo.completed }
+          : todo
+      );
+    default:
+      return state;
+  }
+};
+
+export default todos;
+```
+
+**visibilityFilter.js:**
+```jsx
+import { VisibilityFilters } from "../actions";
+
+const visibilityFilter = (state = VisibilityFilters.SHOW_ALL, action) => {
+  switch (action.type) {
+    case "SET_VISIBILITY_FILTER":
+      return action.filter;
+    default:
+      return state;
+  }
+};
+
+export default visibilityFilter;
+```
+
+**reducers/index.js (combineReducers):**
+```jsx
+import { combineReducers } from "redux";
+import todos from "./todos";
+import visibilityFilter from "./visibilityFilter";
+
+export default combineReducers({
+  todos,
+  visibilityFilter,
+});
+```
+
+**Visual:**
+```
+Action: { type: 'ADD_TODO', text: 'Learn Redux' }
+                    │
+                    ▼
+        ┌─────────────────────┐
+        │    todos Reducer    │
+        │                     │
+        │  state = []         │
+        │       +             │
+        │  action.payload     │
+        │       =             │
+        │  [{ id: 0,          │
+        │     text: 'Learn',  │
+        │     completed: false│
+        │  }]                 │
+        └─────────────────────┘
+```
+
+---
+
+### Step 3: Create Presentational Components
+
+These components **only render UI** - they don't know about Redux.
+
+**Todo.js:**
+```jsx
+import React from "react";
+import PropTypes from "prop-types";
+
+const Todo = ({ onClick, completed, text }) => (
+  <li
+    onClick={onClick}
+    style={{
+      textDecoration: completed ? "line-through" : "none",
+    }}
+  >
+    {text}
+  </li>
+);
+
+Todo.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  completed: PropTypes.bool.isRequired,
+  text: PropTypes.string.isRequired,
+};
+
+export default Todo;
+```
+
+**TodoList.js:**
+```jsx
+import React from "react";
+import Todo from "./Todo";
+
+const TodoList = ({ todos, onTodoClick }) => (
+  <ul>
+    {todos.map((todo, index) => (
+      <Todo key={index} {...todo} onClick={() => onTodoClick(index)} />
+    ))}
+  </ul>
+);
+
+export default TodoList;
+```
+
+**Footer.js:**
+```jsx
+import React from "react";
+import FilterLink from "../containers/FilterLink";
+import { VisibilityFilters } from "../actions";
+
+const Footer = () => (
+  <p>
+    Show:{" "}
+    <FilterLink filter={VisibilityFilters.SHOW_ALL}>All</FilterLink>,{" "}
+    <FilterLink filter={VisibilityFilters.SHOW_ACTIVE}>Active</FilterLink>,{" "}
+    <FilterLink filter={VisibilityFilters.SHOW_COMPLETED}>Completed</FilterLink>
+  </p>
+);
+
+export default Footer;
+```
+
+---
+
+### Step 4: Create Container Components
+
+Container components **connect Redux to React components** using `connect()`.
+
+**AddTodo.js:**
+```jsx
+import React from "react";
+import { connect } from "react-redux";
+import { addTodo } from "../actions";
+
+const AddTodo = ({ dispatch }) => {
+  let input;
+
+  return (
+    <div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (!input.value.trim()) return;
+          dispatch(addTodo(input.value));
+          input.value = "";
+        }}
+      >
+        <input ref={(node) => (input = node)} />
+        <button type="submit">Add Todo</button>
+      </form>
+    </div>
+  );
+};
+
+export default connect()(AddTodo);
+```
+
+**VisibleTodoList.js:**
+```jsx
+import { connect } from "react-redux";
+import { toggleTodo, VisibilityFilters } from "../actions";
+import TodoList from "../components/TodoList";
+
+const getVisibleTodos = (todos, filter) => {
+  switch (filter) {
+    case VisibilityFilters.SHOW_ALL:
+      return todos;
+    case VisibilityFilters.SHOW_COMPLETED:
+      return todos.filter((t) => t.completed);
+    case VisibilityFilters.SHOW_ACTIVE:
+      return todos.filter((t) => !t.completed);
+    default:
+      throw new Error("Unknown filter: " + filter);
+  }
+};
+
+const mapStateToProps = (state) => ({
+  todos: getVisibleTodos(state.todos, state.visibilityFilter),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  toggleTodo: (id) => dispatch(toggleTodo(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
+```
+
+**Visual:**
+```
+┌──────────────────────────────────────────────────────────────┐
+│              CONTAINER vs PRESENTATIONAL                     │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│  ┌─────────────────────┐      ┌─────────────────────┐       │
+│  │   Container (Redux) │      │  Presentational     │       │
+│  │                     │      │  (UI only)          │       │
+│  │  • Knows Redux      │──────▶  • Renders props    │       │
+│  │  • Dispatches       │      │  • No Redux knowledge│      │
+│  │  • Connects to      │      │  • Reusable         │       │
+│  │    store            │      │                     │       │
+│  └─────────────────────┘      └─────────────────────┘       │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Step 5: Create Store and Provider
+
+**index.js:**
+```jsx
+import React from "react";
+import { render } from "react-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import App from "./components/App";
+import rootReducer from "./reducers";
+
+// Create the Redux store
+const store = createStore(rootReducer);
+
+// Wrap App with Provider to make store available everywhere
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
+```
+
+**Visual:**
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    PROVIDER PATTERN                         │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │              <Provider store={store}>               │   │
+│  │  ┌─────────────────────────────────────────────┐   │   │
+│  │  │                  <App />                    │   │   │
+│  │  │                                             │   │   │
+│  │  │   ┌─────────────┐     ┌─────────────┐     │   │   │
+│  │  │   │  Container  │     │  Container  │     │   │   │
+│  │  │   │  (AddTodo)  │     │ (TodoList)  │     │   │   │
+│  │  │   └──────┬──────┘     └──────┬──────┘     │   │   │
+│  │  │          │                    │            │   │   │
+│  │  │          ▼                    ▼            │   │   │
+│  │  │   ┌─────────────┐     ┌─────────────┐     │   │   │
+│  │  │   │  Component  │     │  Component  │     │   │   │
+│  │  │   │  (Form UI)  │     │  (List UI)  │     │   │   │
+│  │  │   └─────────────┘     └─────────────┘     │   │   │
+│  │  └─────────────────────────────────────────────┘   │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  All components inside Provider can access the store!       │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Complete App Component
+
+```jsx
+import React from "react";
+import Footer from "./Footer";
+import AddTodo from "../containers/AddTodo";
+import VisibleTodoList from "../containers/VisibleTodoList";
+
+const App = () => (
+  <div>
+    <AddTodo />
+    <VisibleTodoList />
+    <Footer />
+  </div>
+);
+
+export default App;
+```
+
+---
+
+### Redux State Structure
+
+```jsx
+// Initial State Structure
+{
+  todos: [
+    { id: 0, text: "Learn React", completed: false },
+    { id: 1, text: "Learn Redux", completed: false }
+  ],
+  visibilityFilter: "SHOW_ALL"
+}
+```
+
+**Visual:**
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    REDUX STORE STATE                        │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │                     STATE                           │   │
+│  ├─────────────────────────────────────────────────────┤   │
+│  │                                                     │   │
+│  │  ┌───────────────────────────────────────────────┐ │   │
+│  │  │                  todos                        │ │   │
+│  │  ├───────────────────────────────────────────────┤ │   │
+│  │  │  [                                            │ │   │
+│  │  │    { id: 0, text: "Learn React", completed: false }│ │   │
+│  │  │    { id: 1, text: "Learn Redux", completed: false }│ │   │
+│  │  │  ]                                            │ │   │
+│  │  └───────────────────────────────────────────────┘ │   │
+│  │                                                     │   │
+│  │  ┌───────────────────────────────────────────────┐ │   │
+│  │  │            visibilityFilter                   │ │   │
+│  │  ├───────────────────────────────────────────────┤ │   │
+│  │  │              "SHOW_ALL"                       │ │   │
+│  │  └───────────────────────────────────────────────┘ │   │
+│  │                                                     │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Key Concepts Summary
+
+| Concept | What It Does | Example |
+| ------- | ------------ | ------- |
+| **Store** | Holds entire app state | `createStore(rootReducer)` |
+| **Action** | Describes what happened | `{ type: 'ADD_TODO', text: '...' }` |
+| **Reducer** | Returns new state based on action | `switch(action.type) { ... }` |
+| **Dispatch** | Sends action to store | `dispatch(addTodo('Learn'))` |
+| **connect()** | Links Redux to React component | `connect(mapState, mapDispatch)(Comp)` |
+| **Provider** | Makes store available to all components | `<Provider store={store}>` |
+
+---
+
 ## Quick Recap
 
 | Topic                  | One-Line Summary                                         |
@@ -1479,5 +2290,14 @@ export default App;
 | **useNavigate**        | Navigate programmatically without page reloads.          |
 | **useParams**          | Access dynamic URL parameters.                           |
 | **Outlet**             | Renders child routes inside a parent route.              |
+| **Context API**        | Share data globally without prop drilling.               |
+| **Prop Drilling**      | Passing props through unnecessary intermediate components. |
+| **Redux**              | State management library for complex apps.               |
+| **Store**              | Single source of truth holding entire app state.         |
+| **Action**             | Plain object describing what happened.                   |
+| **Reducer**            | Pure function that returns new state.                    |
+| **dispatch()**         | Sends actions to the Redux store.                        |
+| **connect()**          | Links Redux store to React components.                   |
+| **Provider**           | Makes store available to all child components.           |
 
 Happy learning with React!
