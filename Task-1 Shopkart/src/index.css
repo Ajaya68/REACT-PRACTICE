@@ -1,0 +1,36 @@
+.navbar {
+  display: flex;
+  border: 1px solid black;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 30px;
+}
+.brand-title {
+  text-decoration: none;
+}
+.product-list {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  border: 1px solid black;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+#today-deal {
+  margin-left: 20px;
+}
+.product-card {
+  min-height: 400px;
+  width: 250px;
+  border: 1px solid black;
+  padding: 10px;
+  box-shadow: 2px 3px 4px gray;
+}
+.product-card img {
+  width: 100%;
+}
+.footer {
+  text-align: center;
+  border: 1px solid black;
+  padding: 25px 0px;
+}
